@@ -1,3 +1,8 @@
+/*Given a value of amount  and an infinite supply of each of the 
+denominations arr{..........} of size n valued coins/notes,
+The task is to find the minimum number of coins and/or notes needed to 
+make the change?*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
