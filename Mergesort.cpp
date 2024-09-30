@@ -51,7 +51,7 @@ void divide(int array[], int left, int right)
     }
 }
 
-void puzzleout()
+int main()
 {
     int n;
     cin >> n;
@@ -65,18 +65,3 @@ void puzzleout()
     cout << endl;
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    int TC = 1;
-    // cin >> TC;
-    while (TC--)
-    {
-        puzzleout();
-    }
-
-    return 0;
-}
