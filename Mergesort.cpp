@@ -1,73 +1,66 @@
 #include <bits/stdc++.h>
-#pragma GCC optimize("Ofast,fast-math,unroll-loops")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma")
 using namespace std;
 #define ll long long
 
-vector<int> merge(vector<int> &firstarray, vector<int> &secondarray)
+void merge(int array[], int left, int mid, int right)
 {
-    int fristarraysize = firstarray.size();
-    int secondarraysize = secondarray.size();
-    vector<int> result(fristarraysize + secondarraysize);
-    int i = 0, j = 0, k = 0;
-    while (i < fristarraysize && j < secondarraysize)
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    int leftArray[n1], rightArray[n2];
+
+    for (int i = 0; i < n1; i++)
+        leftArray[i] = array[left + i];
+    for (int j = 0; j < n2; j++)
+        rightArray[j] = array[mid + 1 + j];
+
+    int i = 0, j = 0, k = left;
+
+    while (i < n1 && j < n2)
     {
-        if (firstarray[i] < secondarray[j])
+        if (leftArray[i] <= rightArray[j])
         {
-            result[k++] = firstarray[i++];
+            array[k++] = leftArray[i++];
         }
         else
         {
-            result[k++] = secondarray[j++];
+            array[k++] = rightArray[j++];
         }
     }
-    while (i < fristarraysize)
+
+    while (i < n1)
     {
-        result[k++] = firstarray[i++];
+        array[k++] = leftArray[i++];
     }
-    while (j < secondarraysize)
+    while (j < n2)
     {
-        result[k++] = secondarray[j++];
+        array[k++] = rightArray[j++];
     }
-    return result;
 }
 
-vector<int> devide(vector<int> &array, int n)
+void divide(int array[], int left, int right)
 {
-    if (n == 1)
+    if (left < right)
     {
-        return array;
+        int mid = left + (right - left) / 2;
+
+        divide(array, left, mid);
+        divide(array, mid + 1, right);
+
+        merge(array, left, mid, right);
     }
-    int mid = n / 2;
-    vector<int> firstarray(mid);
-    vector<int> secondarray(n - mid);
-    for (int i = 0; i < mid; i++)
-    {
-        firstarray[i] = array[i];
-    }
-    for (int i = mid; i < n; i++)
-    {
-        secondarray[i - mid] = array[i];
-    }
-    devide(firstarray, mid);
-    devide(secondarray, n - mid);
-    vector<int> result = merge(firstarray, secondarray);
-    for (int i = 0; i < n; i++)
-    {
-        array[i] = result[i];
-    }
-    return array;
 }
 
 void puzzleout()
 {
     int n;
     cin >> n;
-    vector<int> v(n);
-    for (ll i = 0; i < n; i++)
+    int v[n];
+    for (int i = 0; i < n; i++)
         cin >> v[i];
-    v = devide(v, n);
-    for (ll i = 0; i < n; i++)
+
+    divide(v, 0, n - 1);
+    for (int i = 0; i < n; i++)
         cout << v[i] << " ";
     cout << endl;
 }
@@ -84,5 +77,6 @@ int main()
     {
         puzzleout();
     }
+
     return 0;
 }
