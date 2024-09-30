@@ -2,8 +2,9 @@
 using namespace std;
 #define INF 1000000
 const int N = 100;
+int dist[N][N];
 
-void FloydWarshall(int dist[N][N], int v)
+void FloydWarshall(int v)
 {
     for (int k = 0; k < v; k++)
     {
@@ -34,16 +35,15 @@ int main()
 {
     int v, e;
     cin >> v >> e;
-    int graph[N][N];
 
     for (int i = 0; i < v; i++)
     {
         for (int j = 0; j < v; j++)
         {
             if (i == j)
-                graph[i][j] = 0;
+                dist[i][j] = 0;
             else
-                graph[i][j] = INF;
+                dist[i][j] = INF;
         }
     }
 
@@ -51,10 +51,10 @@ int main()
     {
         int x, y, w;
         cin >> x >> y >> w;
-        graph[x][y] = w;
+        dist[x][y] = w;
     }
 
-    FloydWarshall(graph, v);
+    FloydWarshall(v);
 
     return 0;
 }
